@@ -1,0 +1,31 @@
+doctype
+head
+	title Mysql Worker
+	meta(charset="utf-8")
+	link(rel="stylesheet", href="css/bootstrap.min.css")
+	link(rel="stylesheet", href="css/main.css")
+body
+	.container
+		.row
+			.col-sm-6
+				.form-group
+					label(for='table-list') Select table:
+					select#table-list.form-control
+
+			.col-sm-6
+				button.btn#exec Execute
+
+		.row
+			.col-lg-6
+				.form-group
+					label(for='command') Your command(query):
+					textarea#command.form-control(rows='10')
+			.col-lg-6
+				.form-group
+					label(for='result') Result:
+					table#result.table.table-striped
+			.col-lg-12
+				.form-group
+					label(for='log') Лог:
+					textarea#log.form-control(rows='10')
+	script(src="js/admin.js")

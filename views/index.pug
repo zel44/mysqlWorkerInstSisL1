@@ -5,36 +5,42 @@ head
 	link(rel="stylesheet", href="css/bootstrap.min.css")
 	link(rel="stylesheet", href="css/main.css")
 body
-	.container
+	.container#app
 		.row
 			.col-sm-6
 				.form-group
 					label(for='table-list') Select table:
-					select#table-list.form-control
+					select#table-list.form-control(v-model="selectedTable")
+						option(v-for="table in tables") {{table}}
 
-			.col-sm-3
-				.checkbox
-					label
-						input#auto(type='radio', value='auto' checked)
-						| DML
-				.checkbox
-					label
-						input#manual(type='radio', name='auto')
-						| DDL
-			.col-sm-3
-				button.btn#exec Execute
+			.col-sm-6
+				button.btn#exec(@click.prevent="execute") Execute
+
 
 		.row
-			.col-lg-6
+			.col-sm-6
 				.form-group
-					label(for='command') Your command(query):
-					textarea#command.form-control(rows='10')
-			.col-lg-6
+					label(for='col-list') Select column(s) and condition:
+					.column.row(v-for="col in cols")
+						.col-sm-6
+							.col-name.btn(:class="{ 'btn-primary': col.active, 'btn-default': !col.active }", @click="col.active = !col.active") {{col.name}}
+						.col-sm-6
+							input.col-condition.form-control(v-model="col.whereExp")
+
+			.col-sm-6
 				.form-group
 					label(for='result') Result:
 					table#result.table.table-striped
-			.col-lg-12
+						thead
+							tr
+								th(v-for="colName in headers") {{colName}}
+						tbody
+							tr(v-for="row in rows")
+								td(v-for="col in row") {{col}}
+			.col-sm-12
 				.form-group
 					label(for='log') Лог:
-					textarea#log.form-control(rows='10')
+					br
+					.btn.btn-default(v-for="req in requests", @click="reexec(req)") {{req.text}}
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js")
 	script(src="js/index.js")

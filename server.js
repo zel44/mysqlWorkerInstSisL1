@@ -25,6 +25,10 @@ app.post('/mysql', function(req, res){
 	});
 });
 
+app.get('/admin', function(req, res){
+	res.render('admin.pug');
+});
+
 app.get('/', function(req, res){
 	res.render('index.pug');
 });
